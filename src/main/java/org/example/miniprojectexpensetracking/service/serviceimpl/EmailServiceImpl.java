@@ -1,0 +1,32 @@
+package org.example.miniprojectexpensetracking.service.serviceimpl;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import lombok.AllArgsConstructor;
+import org.example.miniprojectexpensetracking.service.EmailService;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+@Service
+@AllArgsConstructor
+public class EmailServiceImpl implements EmailService {
+
+    private final TemplateEngine templateEngine;
+    private final JavaMailSender javaMailSender;
+
+    @Override
+    public void sendMail(String optCode, String email) throws MessagingException {
+        Context context = new Context();
+        context.setVariable("optCode", optCode);
+        String process = templateEngine.process("index", context);
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        mimeMessageHelper.setSubject("Verify your email with opt code");
+        mimeMessageHelper.setText(process, true);
+        mimeMessageHelper.setTo(email);
+        javaMailSender.send(mimeMessage);
+    }
+}

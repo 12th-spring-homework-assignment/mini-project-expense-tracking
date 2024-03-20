@@ -1,0 +1,30 @@
+/* Style for the body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Set your desired background color */
+}
+
+/* Style for the container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Style for the content */
+.content {
+    text-align: center;
+    background-color: #fff; /* Set your desired background color */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+}
+
+/* Style for the <b> tag inside the content */
+b {
+    color: #333; /* Set your desired text color */
+    font-weight: bold;
+}
