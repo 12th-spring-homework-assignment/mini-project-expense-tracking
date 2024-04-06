@@ -69,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
         }
         AppUser user = appUserRepository.findByEmail(appUserRequest.getEmail());
         if (user != null) {
-            throw new NotFoundException("This email is already registered");
+            throw new BadRequestException("This email is already registered");
         }
         appUserRequest.setPassword(passwordEncoder.encode(appUserRequest.getPassword()));
         AppUser appUser = appUserRepository.register(appUserRequest);
@@ -147,7 +147,7 @@ public class AuthServiceImpl implements AuthService {
     public static String generateOTP() {
         // declare randomNo to store the otp
         // generate 4 digits otp
-        int randomNo = (int) (Math.random() * 9000) + 1000;
+        int randomNo = (int) (Math.random() * 900000) + 100000;
         // return otp
         return String.valueOf(randomNo);
     }

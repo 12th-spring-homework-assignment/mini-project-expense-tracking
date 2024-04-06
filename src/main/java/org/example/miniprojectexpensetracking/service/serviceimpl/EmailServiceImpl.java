@@ -4,6 +4,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import org.example.miniprojectexpensetracking.service.EmailService;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,11 @@ public class EmailServiceImpl implements EmailService {
         context.setVariable("optCode", optCode);
         String process = templateEngine.process("index", context);
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
         mimeMessageHelper.setSubject("Verify your email with opt code");
         mimeMessageHelper.setText(process, true);
+        ClassPathResource image = new ClassPathResource("images/8d4bd1e7-030a-4c91-81ef-ebe32fbc52cf.png");
+        mimeMessageHelper.addInline("logo", image);
         mimeMessageHelper.setTo(email);
         javaMailSender.send(mimeMessage);
     }
