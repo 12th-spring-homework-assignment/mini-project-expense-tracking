@@ -5,15 +5,16 @@ import org.example.miniprojectexpensetracking.model.Expense;
 import org.example.miniprojectexpensetracking.model.dto.request.ExpenseRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ExpenseService {
     Expense createExpense(ExpenseRequest expenseRequest);
 
     List<Category> findAllExpenses(Integer limit, Integer offset, String sortBy, Boolean orderBy);
 
-    Expense findExpenseById(Integer expenseId);
+    Expense findExpenseById(UUID expenseId);
 
-    void removeExpense(Integer expenseId);
+    void removeExpense(UUID expenseId);
 
-    Expense updateExpense(Integer expenseId, ExpenseRequest expenseRequest);
+    Expense updateExpense(UUID expenseId, ExpenseRequest expenseRequest);
 }

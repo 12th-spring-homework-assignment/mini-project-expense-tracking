@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -44,7 +45,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findCategoryById(@Positive(message = "Category id cannot be negative or zero") @PathVariable("id") Integer categoryId){
+    public ResponseEntity<?> findCategoryById(@PathVariable("id") UUID categoryId){
         APIResponse<Category> response = APIResponse.<Category>builder()
                 .message("The category has been successfully founded.")
                 .payload(categoryService.findCategoryById(categoryId))
@@ -55,7 +56,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeCategory(@Positive(message = "Category id cannot be negative or zero") @PathVariable("id") Integer categoryId){
+    public ResponseEntity<?> removeCategory(@PathVariable("id") UUID categoryId){
         categoryService.removeCategory(categoryId);
         APIResponse<String> response = APIResponse.<String>builder()
                 .message("The category has been successfully removed.")
@@ -67,7 +68,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCategory(@Positive(message = "Category id cannot be negative or zero") @PathVariable("id") Integer categoryId, @RequestBody @Valid CategoryRequest categoryRequest){
+    public ResponseEntity<?> updateCategory(@PathVariable("id") UUID categoryId, @RequestBody @Valid CategoryRequest categoryRequest){
         APIResponse<Category> response = APIResponse.<Category>builder()
                 .message("The category has been successfully updated.")
                 .payload(categoryService.updateCategory(categoryId, categoryRequest))

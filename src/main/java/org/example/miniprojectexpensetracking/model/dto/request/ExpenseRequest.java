@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -24,6 +25,5 @@ public class ExpenseRequest {
     private LocalDateTime date;
 
     @NotNull
-    @Min(value = 0)
-    private Integer categoryId;
+    private UUID categoryId;
 }

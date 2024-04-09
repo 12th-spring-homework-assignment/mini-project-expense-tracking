@@ -10,6 +10,7 @@ import org.example.miniprojectexpensetracking.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -19,20 +20,20 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category createCategory(CategoryRequest categoryRequest) {
-        Integer userId = authService.findCurrentUser();
+        UUID userId = authService.findCurrentUser();
         return categoryRepository.createCategory(categoryRequest, userId);
     }
 
     @Override
     public List<Category> findAllCategories(Integer limit, Integer offset) {
         offset = (offset - 1) * limit;
-        Integer userId = authService.findCurrentUser();
+        UUID userId = authService.findCurrentUser();
         return categoryRepository.findAllCategories(limit, offset, userId);
     }
 
     @Override
-    public Category findCategoryById(Integer categoryId) {
-        Integer userId = authService.findCurrentUser();
+    public Category findCategoryById(UUID categoryId) {
+        UUID userId = authService.findCurrentUser();
         Category category = categoryRepository.findCategoryById(categoryId, userId);
         if (category == null){
             throw new NotFoundException("The category id " + categoryId + " has not been founded.");
@@ -41,15 +42,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void removeCategory(Integer categoryId) {
-        Integer userId = authService.findCurrentUser();
+    public void removeCategory(UUID categoryId) {
+        UUID userId = authService.findCurrentUser();
         findCategoryById(categoryId);
         categoryRepository.removeCategory(categoryId, userId);
     }
 
     @Override
-    public Category updateCategory(Integer categoryId, CategoryRequest categoryRequest) {
-        Integer userId = authService.findCurrentUser();
+    public Category updateCategory(UUID categoryId, CategoryRequest categoryRequest) {
+        UUID userId = authService.findCurrentUser();
         findCategoryById(categoryId);
         return categoryRepository.updateCategory(categoryId, categoryRequest, userId);
     }

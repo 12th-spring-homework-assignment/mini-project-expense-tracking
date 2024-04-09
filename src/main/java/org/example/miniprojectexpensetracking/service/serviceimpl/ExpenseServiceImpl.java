@@ -12,6 +12,7 @@ import org.example.miniprojectexpensetracking.service.ExpenseService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -22,22 +23,22 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense createExpense(ExpenseRequest expenseRequest) {
-        Integer userId = authService.findCurrentUser();
+        UUID userId = authService.findCurrentUser();
         categoryService.findCategoryById(expenseRequest.getCategoryId());
         return expenseRepository.createExpense(expenseRequest, userId);
     }
 
     @Override
     public List<Category> findAllExpenses(Integer limit, Integer offset, String sortBy, Boolean orderBy) {
-        Integer userId = authService.findCurrentUser();
+        UUID userId = authService.findCurrentUser();
         offset = (offset - 1) * limit;
         String order = orderBy ? "DESC" : "ASC";
         return expenseRepository.findAllExpenses(limit, offset, sortBy, order, userId);
     }
 
     @Override
-    public Expense findExpenseById(Integer expenseId) {
-        Integer userId = authService.findCurrentUser();
+    public Expense findExpenseById(UUID expenseId) {
+        UUID userId = authService.findCurrentUser();
         Expense expense = expenseRepository.findExpenseById(expenseId, userId);
         if (expense == null){
             throw new NotFoundException("The expense id " + expenseId + " has not been founded.");
@@ -46,15 +47,15 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void removeExpense(Integer expenseId) {
-        Integer userId = authService.findCurrentUser();
+    public void removeExpense(UUID expenseId) {
+        UUID userId = authService.findCurrentUser();
         findExpenseById(expenseId);
         expenseRepository.removeExpense(expenseId, userId);
     }
 
     @Override
-    public Expense updateExpense(Integer expenseId, ExpenseRequest expenseRequest) {
-        Integer userId = authService.findCurrentUser();
+    public Expense updateExpense(UUID expenseId, ExpenseRequest expenseRequest) {
+        UUID userId = authService.findCurrentUser();
         findExpenseById(expenseId);
         categoryService.findCategoryById(expenseRequest.getCategoryId());
         return expenseRepository.updateExpense(expenseId, expenseRequest, userId);

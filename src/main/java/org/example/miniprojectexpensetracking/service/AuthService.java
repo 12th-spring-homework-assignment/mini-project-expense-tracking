@@ -7,6 +7,8 @@ import org.example.miniprojectexpensetracking.model.dto.request.PasswordRequest;
 import org.example.miniprojectexpensetracking.model.dto.response.AppUserResponse;
 import org.example.miniprojectexpensetracking.model.dto.response.AuthResponse;
 
+import java.util.UUID;
+
 public interface AuthService {
     AuthResponse login(AuthRequest authRequest) throws Exception;
 
@@ -18,5 +20,5 @@ public interface AuthService {
 
     void forget(String email, PasswordRequest passwordRequest);
 
-    Integer findCurrentUser();
+    UUID findCurrentUser();
 }

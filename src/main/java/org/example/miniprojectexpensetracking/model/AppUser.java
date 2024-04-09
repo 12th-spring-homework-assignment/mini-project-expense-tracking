@@ -9,13 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppUser implements UserDetails {
 
-    private Integer userId;
+    private UUID userId;
     private String email;
     private String password;
     private String profileImage;

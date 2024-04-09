@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 import org.example.miniprojectexpensetracking.model.dto.response.AppUserResponse;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Expense {
-    private Integer expenseId;
+    private UUID expenseId;
     private Double amount;
     private String description;
     private LocalDateTime date;

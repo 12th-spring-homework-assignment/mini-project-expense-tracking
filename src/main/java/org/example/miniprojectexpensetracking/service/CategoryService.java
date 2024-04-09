@@ -4,15 +4,16 @@ import org.example.miniprojectexpensetracking.model.Category;
 import org.example.miniprojectexpensetracking.model.dto.request.CategoryRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CategoryService {
     Category createCategory(CategoryRequest categoryRequest);
 
     List<Category> findAllCategories(Integer limit, Integer offset);
 
-    Category findCategoryById(Integer categoryId);
+    Category findCategoryById(UUID categoryId);
 
-    void removeCategory(Integer categoryId);
+    void removeCategory(UUID categoryId);
 
-    Category updateCategory(Integer categoryId, CategoryRequest categoryRequest);
+    Category updateCategory(UUID categoryId, CategoryRequest categoryRequest);
 }

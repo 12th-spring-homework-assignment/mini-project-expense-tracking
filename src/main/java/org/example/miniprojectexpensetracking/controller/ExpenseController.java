@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -51,7 +52,7 @@ public class ExpenseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findExpenseById(@Positive(message = "Expense id cannot be negative or zero") @PathVariable("id") Integer expenseId){
+    public ResponseEntity<?> findExpenseById(@PathVariable("id") UUID expenseId){
         APIResponse<Expense> response = APIResponse.<Expense>builder()
                 .message("The expense has been successfully founded.")
                 .payload(expenseService.findExpenseById(expenseId))
@@ -62,7 +63,7 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeExpense(@Positive(message = "Expense id cannot be negative or zero") @PathVariable("id") Integer expenseId){
+    public ResponseEntity<?> removeExpense(@PathVariable("id") UUID expenseId){
         expenseService.removeExpense(expenseId);
         APIResponse<String> response = APIResponse.<String>builder()
                 .message("The expense has been successfully removed.")
@@ -74,7 +75,7 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateExpense(@Positive(message = "Expense id cannot be negative or zero") @PathVariable("id") Integer expenseId, @RequestBody @Valid ExpenseRequest expenseRequest){
+    public ResponseEntity<?> updateExpense(@PathVariable("id") UUID expenseId, @RequestBody @Valid ExpenseRequest expenseRequest){
         APIResponse<Expense> response = APIResponse.<Expense>builder()
                 .message("The expense has been successfully updated.")
                 .payload(expenseService.updateExpense(expenseId, expenseRequest))

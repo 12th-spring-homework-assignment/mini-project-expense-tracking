@@ -1,8 +1,11 @@
 package org.example.miniprojectexpensetracking.repository;
 
 import org.apache.ibatis.annotations.*;
+import org.example.miniprojectexpensetracking.configuration.UuidTypeHandler;
 import org.example.miniprojectexpensetracking.model.Otp;
 import org.example.miniprojectexpensetracking.model.dto.request.OtpRequest;
+
+import java.util.UUID;
 
 @Mapper
 public interface OtpRepository {
@@ -13,7 +16,7 @@ public interface OtpRepository {
             @Result(property = "otpCode", column = "otp_code"),
             @Result(property = "issuedAt", column = "issued_at")
     })
-    Otp findOptByUserId(Integer userId);
+    Otp findOptByUserId(UUID userId);
 
     @Insert("INSERT INTO otps (otp_code, issued_at, expiration, verify, user_id) VALUES (#{otp.otpCode}, #{otp.issuedAt}, #{otp.expiration}, #{otp.verify}, #{otp.userId})")
     void saveOpt(@Param("otp") OtpRequest otpRequest);
