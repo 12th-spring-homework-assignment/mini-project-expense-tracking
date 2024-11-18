@@ -1,31 +1,36 @@
-version: '3'
-
-volumes:
-  postgres_data:
-    driver: local
-
 services:
-
-  postgres:
-    image: postgres:14.4-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  expense-tracking-postgres:
+    image: postgres:latest
+    restart: always
     environment:
-      POSTGRES_DB: expense-tracking
+      POSTGRES_DB: expense_tracking_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - expense-tracking-postgres-data:/var/lib/postgresql/data
     ports:
-      - "5444:5432"
-  expense-tracking-service:
+      - "5433:5432"
+    networks:
+      - expense-tracking-network
+
+  expense-tracking-api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: expense-tracking_service
-    depends_on:
-      - postgres
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://110.74.194.123:5444/expense-tracking
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=password
+    restart: always
     ports:
-      - "1010:8080"
+      - "8090:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://expense-tracking-postgres:5432/expense_tracking_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - expense-tracking-postgres
+    networks:
+      - expense-tracking-network
+
+volumes:
+  expense-tracking-postgres-data:
+networks:
+  expense-tracking-network:
+    driver: bridge
